@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <h1>Bitte berichten Sie von ihrer Sichtung</h1>
+        <form th:action="@{/sichtung/meine/neu}" th:method="POST" th:object="${meinesichtungform}">
+            <label for="name">Benutzer</label>
+            <input type="text" id="name" th:field="*{name}"/><br>
+            <label for="ort">Ort</label>
+            <input type="text" id="ort" th:field="*{ort}"/><br>
+            <label for="beschreibung">Beschreibung</label>
+            <input type="text" id="beschreibung" th:field="*{beschreibung}"/><br>
+            <label for="datum">Sichtung am</label>
+            <input type="date" id="datum" th:field="*{datum}" value="2021-04-29"/><br>
+            <button name="okButton">OK</button>
+        </form>
+    </body>
+</html>

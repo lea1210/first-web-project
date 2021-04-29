@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <table>
+            <tr>
+               <th>Datum</th> 
+               <th>Name</th> 
+               <th>Ort</th> 
+               <th>Beschreibung</th> 
+            </tr>
+            <tr th:each="element,status : ${meinesichtungen}">
+                <td th:text="${element.datum}"></td>
+                <td th:text="${element.name}"></td>
+                <td th:text="${element.ort}"></td>
+                <td th:text="${element.beschreibung}"></td>
+                <td>
+                    <a th:href="@{/sichtung/meine/}+${status.index}">[edit]</a>
+                    <a th:href="@{/sichtung/meine/} + ${status.index} +@{/del}">[del]</a>
+                </td>
+            </tr>
+        </table>
+        <a th:href="@{/sichtung/meine/neu}">Neue Sichung erfassen</a>
+    </body>
+</html>
