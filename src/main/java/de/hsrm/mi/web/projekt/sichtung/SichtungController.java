@@ -31,7 +31,6 @@ public class SichtungController {
 
         m.addAttribute("meinesichtungen", meineSichtis);
     }
-    
 
     @GetMapping("/sichtung/meine")
     public String sichtung_get(Model m){
