@@ -33,7 +33,6 @@ public class LoginController{
         logger.info("Korrektes Passwort: " + correctPassword);
 
         if (password.equals(correctPassword)){
-            loggedinuser = username;
             m.addAttribute("loggedinusername", username);
             logger.info("Passwort korrekt");
             return "redirect:/sichtung/meine";

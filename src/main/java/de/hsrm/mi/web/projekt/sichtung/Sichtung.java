@@ -2,14 +2,27 @@ package de.hsrm.mi.web.projekt.sichtung;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 
 public class Sichtung {
+    @Size(min=3,message="Name muss mindestens {min} Zeichen lang sein!")
+    @NotBlank
     private String name;
+
+    @NotBlank(message = "Der Ort darf nicht leer sein!")
     private String ort;
+
+    @NotNull(message = "Das Datum darf nicht leer sein!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate datum;
+
+    @Size(max=80,message="Beschreibung darf höchstens {max} Zeichen lang sein!")
+    @NotBlank
     private String beschreibung;
 
     public Sichtung(){
