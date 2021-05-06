@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +68,15 @@ public class SichtungController {
     }
 
     @PostMapping("/sichtung/meine/neu")
-    public String sichtung_postNeu(Model m, @ModelAttribute("meinesichtungform") Sichtung meineSichtungForm, @ModelAttribute("meinesichtungen") ArrayList<Sichtung> meineSichtungen){
+    public String sichtung_postNeu(Model m, @Valid @ModelAttribute("meinesichtungform") Sichtung meineSichtungForm, BindingResult sichtungformErrors, @ModelAttribute("meinesichtungen") ArrayList<Sichtung> meineSichtungen){
+
+        //wenn Validierungsfehler auftreten auf der gleichen Seite bleiben
+        if(sichtungformErrors.hasErrors()){
+            logger.info("Validierungsfehler im Formular.");
+            return "sichtung/meine/bearbeiten";
+        }
+
+        //wenn keine Validierungsfehler auftreten Sichtung hinzufuegen und redirect zur Uebersicht 
         meineSichtungen.add(meineSichtungForm);
         logger.info("Neue Sichtung hinzugefuegt, leite zurueck zur Uebersicht");
         return "redirect:/sichtung/meine";
