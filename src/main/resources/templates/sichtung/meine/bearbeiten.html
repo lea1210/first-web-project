@@ -17,7 +17,7 @@
             <input type="text" id="beschreibung" th:field="*{beschreibung}" th:errorclass="formError"/><br>
             <span th:if="${#fields.hasErrors('beschreibung')}" th:errors="*{beschreibung}">Beschreibung falsch</span><br>
             <label for="datum">Sichtung am</label>
-            <input type="date" id="datum" th:field="*{datum}" value="2021-04-29" th:errorclass="formError"/><br>
+            <input type="date" id="datum" th:field="*{datum}" th:errorclass="formError"/><br>
             <span th:if="${#fields.hasErrors('datum')}" th:errors="*{datum}">Datum falsch</span><br>
             <button name="okButton">OK</button>
         </form>

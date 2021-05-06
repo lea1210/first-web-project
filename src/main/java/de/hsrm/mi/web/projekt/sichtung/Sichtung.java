@@ -8,10 +8,12 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import de.hsrm.mi.web.projekt.validierung.Siebzehnhaft;
+
 
 public class Sichtung {
     @Size(min=3,message="Name muss mindestens {min} Zeichen lang sein!")
-    @NotBlank
+    @NotBlank(message = "Der Name darf nicht leer sein!")
     private String name;
 
     @NotBlank(message = "Der Ort darf nicht leer sein!")
@@ -22,7 +24,8 @@ public class Sichtung {
     private LocalDate datum;
 
     @Size(max=80,message="Beschreibung darf höchstens {max} Zeichen lang sein!")
-    @NotBlank
+    @NotBlank(message = "Die Beschreibung darf nicht leer sein!")
+    @Siebzehnhaft(value="17",message="Eingabe enthält weder 17 noch siebzehn.")
     private String beschreibung;
 
     public Sichtung(){
