@@ -25,7 +25,7 @@ public class Sichtung {
 
     @Size(max=80,message="Beschreibung darf höchstens {max} Zeichen lang sein!")
     @NotBlank(message = "Die Beschreibung darf nicht leer sein!")
-    @Siebzehnhaft(value="17",message="Eingabe enthält weder 17 noch siebzehn.")
+    @Siebzehnhaft(value="17",message="{siebzehnhaft.fehler}")
     private String beschreibung;
 
     public Sichtung(){

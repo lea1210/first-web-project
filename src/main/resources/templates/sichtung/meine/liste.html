@@ -5,12 +5,17 @@
         <link rel="stylesheet" th:href="@{/css/liste.css}">
     </head>
     <body>
+        <h1></h1>
+        <div>
+            <span><a th:href="@{?sprache=de}">Deutsch</a></span>
+            <span><a th:href="@{?sprache=en}">English</a></span>
+        </div>
         <table>
             <tr>
-               <th>Datum</th> 
-               <th>Name</th> 
-               <th>Ort</th> 
-               <th>Beschreibung</th> 
+               <th th:text="#{headerdatum}">Datum</th> 
+               <th th:text="#{headername}">Name</th> 
+               <th th:text="#{headerort}">Ort</th> 
+               <th th:text="#{headerbeschreibung}">Beschreibung</th> 
             </tr>
             <tr th:each="element,status : ${meinesichtungen}">
                 <td th:text="${element.datum}"></td>
