@@ -12,19 +12,19 @@ import de.hsrm.mi.web.projekt.validierung.Siebzehnhaft;
 
 
 public class Sichtung {
-    @Size(min=3,message="Name muss mindestens {min} Zeichen lang sein!")
-    @NotBlank(message = "Der Name darf nicht leer sein!")
+    @Size(min=3,message="{anzahlZeichenName.fehler} {min} ")
+    @NotBlank(message = "{leeresFeld.fehler}")
     private String name;
 
-    @NotBlank(message = "Der Ort darf nicht leer sein!")
+    @NotBlank(message = "{leeresFeld.fehler}")
     private String ort;
 
-    @NotNull(message = "Das Datum darf nicht leer sein!")
+    @NotNull(message = "{leeresFeld.fehler}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate datum;
 
-    @Size(max=80,message="Beschreibung darf höchstens {max} Zeichen lang sein!")
-    @NotBlank(message = "Die Beschreibung darf nicht leer sein!")
+    @Size(max=80,message="{anzahlZeichenBeschreibung.fehler}{max}")
+    @NotBlank(message = "{leeresFeld.fehler}")
     @Siebzehnhaft(value="17",message="{siebzehnhaft.fehler}")
     private String beschreibung;
 
