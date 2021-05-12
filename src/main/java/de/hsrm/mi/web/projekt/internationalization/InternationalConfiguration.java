@@ -1,8 +1,6 @@
 package de.hsrm.mi.web.projekt.internationalization;
 
-import java.util.Locale;
 
-import org.hibernate.validator.spi.messageinterpolation.LocaleResolver;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
