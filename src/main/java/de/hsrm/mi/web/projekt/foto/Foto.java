@@ -22,6 +22,8 @@ public class Foto {
     @Version
     private long version;
 
+   
+
     @NotBlank(message = "{leeresFeld.fehler}")
     private String mimetype;
 
@@ -99,6 +101,21 @@ public class Foto {
 
     public void setFotodaten(byte[] fotodaten) {
         this.fotodaten = fotodaten;
+    }
+    public long getId() {
+        return this.id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getVersion() {
+        return this.version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 
    

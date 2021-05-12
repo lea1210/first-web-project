@@ -9,6 +9,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 repositories {
+	maven { url "http://www.javaxt.com/maven" }
 	mavenCentral()
 }
 
@@ -21,6 +22,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	runtimeOnly 'com.h2database:h2'
+	implementation 'javaxt:javaxt-core:1.10.4'
+
 }
 
 test {
