@@ -46,6 +46,14 @@ public class Foto {
         zeitstempel = LocalDateTime.MIN;  
     }
 
+    public Foto(String dateiname, String mimetype, byte[] fotodaten){
+        this.mimetype = mimetype;
+        this.dateiname = dateiname;
+        this.fotodaten = fotodaten;
+        this.ort = "";
+        this.zeitstempel = LocalDateTime.MIN;  
+    }
+
 
     public String getMimetype() {
         return this.mimetype;

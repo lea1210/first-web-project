@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface FotoService{
     public Foto fotoAbspeichern(Foto foto);
-    public Optional<Foto> fotoAbfragenNachId(Long Id);
+    public Optional<Foto> fotoAbfragenNachId(Long id);
     public List<Foto> alleFotosNachZeitstempelSortiert();
     public void loescheFoto(Long id);
 
