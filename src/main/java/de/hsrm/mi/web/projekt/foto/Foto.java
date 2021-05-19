@@ -22,8 +22,6 @@ public class Foto {
     @Version
     private long version;
 
-   
-
     @NotBlank(message = "{leeresFeld.fehler}")
     private String mimetype;
 

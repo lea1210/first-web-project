@@ -55,7 +55,7 @@ public class FotoController {
     @GetMapping("/foto/{id}/del")
     public String foto_getDelete(Model m, @PathVariable("id") long id){
         fbservice.loescheFoto(id);
-        logger.info("Foto gelöscht");
+        logger.info("Foto mit folgender Id gelöscht: " + id);
         return "redirect:/foto";
     }
 
