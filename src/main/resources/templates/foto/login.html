@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" th:href="@{/css/login.css}">
+    </head>
+    <body>
+        <h1>Foto-Login</h1>
+        <form action="/fotologin" method="POST">
+            <span th:if="${password}!=${correctPassword}" th:text="|Hinweis: Das korrekte Passwort für ${username} ist ${correctPassword}|">""</span><br>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username"/><br>
+            <label for="username">Passwort</label>
+            <input type="text" id="password" name="password"/><br><br>
+            <button name="okButton">OK</button>
+        </form>
+    </body>
+</html>
