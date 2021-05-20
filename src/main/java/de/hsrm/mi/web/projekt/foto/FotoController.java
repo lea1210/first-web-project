@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -31,10 +32,9 @@ public class FotoController {
         m.addAttribute("fotos", meineFotos);
     }
 
+
     @GetMapping("/foto/{id}")
     public ResponseEntity<byte[]> foto_getId(Model m, @PathVariable("id") long id){
-        logger.info("----------------------------------------");
-        logger.info("GetId erreicht.");
 
         Optional<Foto> optFoto = fbservice.fotoAbfragenNachId(id);
 
@@ -96,5 +96,41 @@ public class FotoController {
         return "foto/liste";
         
     }
+    @GetMapping("/foto/{id}/kommentar")
+    public String foto_getKommentar(Model m,  @PathVariable("id") long id, @ModelAttribute("fotos") ArrayList<Foto> fotos, @SessionAttribute("loggedinusername") String autor,  @ModelAttribute("selectedFoto") Foto selectedFoto){
+
+        Optional<Foto> selectedFotoOpt = fbservice.fotoAbfragenNachId(id);
+        if(selectedFotoOpt.isPresent()){
+            logger.info("Es gibt das Foto zum Anzeigen der Kommentare");
+            selectedFoto = selectedFotoOpt.get();
+            m.addAttribute("selectedFoto", selectedFoto);
+           // if(autor.equals("")){
+             //   m.addAttribute("loggedinusername", null);
+            //}
+            m.addAttribute("loggedinusername", autor);
+            return "foto/kommentare";
+        }
+        return "foto/liste";
+       
+    }
+
+    @PostMapping("/foto/{id}/kommentar")
+    public String foto_postKommentar(Model m,  @PathVariable("id") long id, @RequestParam String kommentar, @SessionAttribute("loggedinusername") String autor){
+
+        logger.info("Bin hier im Post Kommentar");
+
+        //weder Kommentar noch loggedinusername dürfen leer sein
+        if(!(kommentar.isEmpty())){
+            logger.info("Kommentar ist nicht leer");
+            if(!(autor.isEmpty())){
+                logger.info("Autor ist nicht leer");
+                fbservice.fotoKommentieren(id, autor, kommentar);
+                logger.info("Foto erfolgreich kommentiert");
+            }
+        }
+        return "redirect:/foto/"  + id + "/kommentar";
+       
+    }
+
     
 }

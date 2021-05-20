@@ -1,16 +1,22 @@
 package de.hsrm.mi.web.projekt.foto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Foto {
@@ -34,14 +40,20 @@ public class Foto {
     private double geolaenge;
     private double geobreite;
 
+    @JsonIgnore
     @Lob
     private byte[] fotodaten;
+
+    @OneToMany(mappedBy="aktFoto", cascade=CascadeType.ALL, orphanRemoval=true)
+    private List<Kommentar> kommentare = new ArrayList<Kommentar>();
+
 
     public Foto(){
         mimetype = "";
         dateiname = "";
         ort = "";
         zeitstempel = LocalDateTime.MIN;  
+        
     }
 
     public Foto(String dateiname, String mimetype, byte[] fotodaten){
@@ -67,6 +79,14 @@ public class Foto {
 
     public void setDateiname(String dateiname) {
         this.dateiname = dateiname;
+    }
+    
+    public List<Kommentar> getKommentare() {
+        return this.kommentare;
+    }
+
+    public void setKommentare(List<Kommentar> kommentare) {
+        this.kommentare = kommentare;
     }
 
     public String getOrt() {
@@ -123,8 +143,6 @@ public class Foto {
     public void setVersion(long version) {
         this.version = version;
     }
-
-   
 
     @Override
     public boolean equals(Object o) {

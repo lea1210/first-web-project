@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" th:href="@{/css/liste.css}">
+    </head>
+    <body>
+        <h1>Foto kommentieren</h1>
+        <span th:text="${selectedFoto.dateiname}"></span><br>
+        <img th:src="@{/foto/}+${selectedFoto.id}"  alt="Ein Foto." width="200" height="300"></img><br>
+        <span><a target="_blank" th:href="|https://www.openstreetmap.org/#map=17/${selectedFoto.geobreite}/${selectedFoto.geolaenge}|" th:text="${selectedFoto.ort}">Schlumpfhausen</a></span><br>
+        <h2>Kommentare</h2>
+        <span th:each="kommentar:${selectedFoto.kommentare}">
+            <span th:text="${kommentar.autor}"></span>Autor<br>
+            <span th:text="${kommentar.text}"></span>Text<br>
+            <span th:text="${kommentar.zeitpunkt}"></span>Zeitpunkt<br>
+        </span>
+        <div th:if="${loggedinusername}!=null">
+            <h2>Geben Sie hier Ihren neuen Kommentar ein!</h2>
+            <form th:action="@{/foto/} + ${id} +@{/kommentar}" th:method="POST">
+                <input type="text" name="kommentar"><br>
+                <button name="okButton">OK</button>
+            </form>
+        </div>
+        <span><a th:href="@{/foto}">zurück</a></span><br>
+    </body>
+</html>
