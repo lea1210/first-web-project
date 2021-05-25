@@ -97,7 +97,7 @@ public class Kommentar {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, version, aktFoto, autor, zeitpunkt, text);
+        return Objects.hash(id);
     }
 
     
