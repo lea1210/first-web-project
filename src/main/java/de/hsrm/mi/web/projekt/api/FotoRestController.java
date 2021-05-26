@@ -37,7 +37,6 @@ public class FotoRestController {
 
     @GetMapping("/foto/{id}/kommentar")
     public List<Kommentar>  fotoRest_getKommentar(Model m, @PathVariable("id")long id){
-        
         return fservice.alleKommentareFuerFoto(id);
     }
 

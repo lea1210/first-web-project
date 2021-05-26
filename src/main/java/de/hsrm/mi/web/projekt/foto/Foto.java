@@ -16,7 +16,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 public class Foto {
@@ -44,6 +47,8 @@ public class Foto {
     @Lob
     private byte[] fotodaten;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Kommentar> kommentare = new ArrayList<Kommentar>();
 
