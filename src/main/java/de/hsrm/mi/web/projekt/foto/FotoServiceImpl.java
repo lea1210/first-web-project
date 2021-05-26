@@ -62,7 +62,6 @@ public class FotoServiceImpl implements FotoService{
             Foto actFoto = foundFoto.get();
             Kommentar actKom = new Kommentar(autor, kommentar);
             actFoto.getKommentare().add(actKom);
-
             fotorep.save(actFoto);
         }else{
             throw new NoSuchElementException();

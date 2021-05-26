@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Controller
+@SessionAttributes(names = {"loggedinusername"})
 public class FotoController {
     Logger logger = LoggerFactory.getLogger(FotoController.class);
     @Autowired FotoService fbservice;
@@ -97,17 +99,30 @@ public class FotoController {
         
     }
     @GetMapping("/foto/{id}/kommentar")
-    public String foto_getKommentar(Model m,  @PathVariable("id") long id, @ModelAttribute("fotos") ArrayList<Foto> fotos, @SessionAttribute("loggedinusername") String autor,  @ModelAttribute("selectedFoto") Foto selectedFoto){
+    public String foto_getKommentar(Model m,  @PathVariable("id") long id, @ModelAttribute("fotos") ArrayList<Foto> fotos,  @ModelAttribute("selectedFoto") Foto selectedFoto, @ModelAttribute("kommentare") ArrayList<Kommentar> kommentare){
 
         Optional<Foto> selectedFotoOpt = fbservice.fotoAbfragenNachId(id);
         if(selectedFotoOpt.isPresent()){
             logger.info("Es gibt das Foto zum Anzeigen der Kommentare");
             selectedFoto = selectedFotoOpt.get();
+           
             m.addAttribute("selectedFoto", selectedFoto);
-           // if(autor.equals("")){
-             //   m.addAttribute("loggedinusername", null);
-            //}
-            m.addAttribute("loggedinusername", autor);
+            logger.info("So viele Kommentare habe ich: "+ fbservice.alleKommentareFuerFoto(id).size());
+            m.addAttribute("kommentare", fbservice.alleKommentareFuerFoto(id));
+           
+            //wenn es einen loggedinusername gibt, darf der Anwender Kommentare schreiben
+            logger.info("get attribute: " + m.asMap());
+            Object loggedinusername = m.getAttribute("loggedinusername");
+            if(loggedinusername != null ){
+                logger.info("loggedinusername ist nicht null");
+                String loggedIn = loggedinusername.toString();
+                    if(!loggedIn.equals("")){
+                    logger.info("loggedIn: "+ loggedIn);
+                    m.addAttribute("loggedinusername", loggedIn);
+                }
+            }else{
+                logger.info("loggedinjusername ist null");
+            }
             return "foto/kommentare";
         }
         return "foto/liste";
@@ -115,17 +130,22 @@ public class FotoController {
     }
 
     @PostMapping("/foto/{id}/kommentar")
-    public String foto_postKommentar(Model m,  @PathVariable("id") long id, @RequestParam String kommentar, @SessionAttribute("loggedinusername") String autor){
+    public String foto_postKommentar(Model m,  @PathVariable("id") long id, @RequestParam String kommentar){
 
-        logger.info("Bin hier im Post Kommentar");
+        Object autorObj = m.getAttribute("loggedinusername");
 
         //weder Kommentar noch loggedinusername dürfen leer sein
         if(!(kommentar.isEmpty())){
             logger.info("Kommentar ist nicht leer");
-            if(!(autor.isEmpty())){
-                logger.info("Autor ist nicht leer");
-                fbservice.fotoKommentieren(id, autor, kommentar);
-                logger.info("Foto erfolgreich kommentiert");
+           // if(!(autor.isEmpty())){
+            if(autorObj != null){
+                String autor = autorObj.toString();
+                if(!autor.equals("")){
+                    logger.info("Autor ist nicht leer");
+                    fbservice.fotoKommentieren(id, autor, kommentar);
+                    logger.info("Foto erfolgreich kommentiert");
+                    logger.info("so viele kommentare hat das foto jetzt: "+ fbservice.alleKommentareFuerFoto(id).size());
+                }
             }
         }
         return "redirect:/foto/"  + id + "/kommentar";

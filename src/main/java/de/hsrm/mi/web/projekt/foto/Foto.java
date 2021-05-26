@@ -44,7 +44,7 @@ public class Foto {
     @Lob
     private byte[] fotodaten;
 
-    @OneToMany(mappedBy="aktFoto", cascade=CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Kommentar> kommentare = new ArrayList<Kommentar>();
 
 

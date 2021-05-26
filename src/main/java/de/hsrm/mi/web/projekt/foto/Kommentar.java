@@ -13,8 +13,6 @@ import javax.persistence.Version;
 @Entity
 public class Kommentar {
 
-   
-
     @GeneratedValue
     @Id
     private long id;
@@ -22,8 +20,8 @@ public class Kommentar {
     @Version
     private long version;
 
-    @ManyToOne
-    private Foto aktFoto;
+   // @ManyToOne
+   // private Foto aktFoto;
 
     private String autor;
     private LocalDateTime zeitpunkt;
