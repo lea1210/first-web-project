@@ -1,13 +1,16 @@
 package de.hsrm.mi.web.projekt.spruch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 @Entity
 public class Spruch {
-
     @Id
     @GeneratedValue
     private long id;
@@ -20,6 +23,17 @@ public class Spruch {
     private String text;
 
     private int anspruch;
+
+    @OneToMany
+    private List <Tag> tags = new ArrayList<Tag>();
+
+    public List<Tag> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
 
     public Spruch(){
         name = "";
@@ -73,5 +87,4 @@ public class Spruch {
         this.anspruch = anspruch;
     }
 
-    
 }

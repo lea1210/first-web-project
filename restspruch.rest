@@ -91,3 +91,15 @@ POST http://localhost:8080/rest/tags/
 {
     "name": "tagtest3"
 }
+
+###
+GET http://localhost:8080/rest/spruches/1/
+###
+POST http://localhost:8080/rest/spruches/1/tags
+Content-Type: text/uri-list
+
+http://localhost:8080/rest/tags/4
+###
+GET http://localhost:8080/rest/spruches/1/tags
+###
+DELETE http://localhost:8080/rest/spruches/1/tags/4

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
 
-public interface SpruchRepository extends JpaRepository<Spruch, Long>{
+public interface SpruchRepository extends JpaRepository<Spruch,Long>{
     
     List <Spruch> findByTextContainingIgnoreCase(@Param("suche")String suchwort);
 }
