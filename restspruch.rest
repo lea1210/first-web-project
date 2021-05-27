@@ -1,0 +1,93 @@
+GET http://localhost:8080/rest
+###
+GET http://localhost:8080/rest/spruches/
+###
+POST http://localhost:8080/rest/spruches/
+
+{
+    "name": "test",
+    "text": "das hier ist ein testspruch",
+    "anspruch": "3"
+}
+###
+DELETE http://localhost:8080/rest/spruches/3
+###
+PUT http://localhost:8080/rest/spruches/1
+
+{
+    "name": "test",
+    "text": "das hier ist ein testspruch",
+    "anspruch": "20"
+}
+###
+POST http://localhost:8080/rest/spruches/
+
+{
+    "name": "test1",
+    "text": "das hier ist ein toller testspruch",
+    "anspruch": "1"
+}
+###
+POST http://localhost:8080/rest/spruches/
+
+{
+    "name": "test2",
+    "text": "das hier ist ein super testspruch",
+    "anspruch": "3"
+}
+###
+POST http://localhost:8080/rest/spruches/
+
+{
+    "name": "test3",
+    "text": "das hier ist ein mega testspruch",
+    "anspruch": "5"
+}
+###
+POST http://localhost:8080/rest/spruches/
+
+{
+    "name": "test4",
+    "text": "das hier ist ein cooler testspruch",
+    "anspruch": "7"
+}
+###
+POST http://localhost:8080/rest/spruches/
+
+{
+    "name": "test5",
+    "text": "das hier ist ein existenter testspruch",
+    "anspruch": "8"
+}
+###
+GET http://localhost:8080/rest/spruches/?sort=anspruch
+###
+GET http://localhost:8080/rest/spruches/?sort=name,desc
+###
+GET http://localhost:8080/rest/spruches/?sort=anspruch&size=2
+###
+GET http://localhost:8080/rest/spruches/?page=0&size=2&sort=anspruch,asc
+###
+GET http://localhost:8080/rest/spruches/?page=1&size=2&sort=anspruch,asc
+###
+GET http://localhost:8080/rest/spruches/?page=2&size=2&sort=anspruch,asc
+###
+GET http://localhost:8080/rest/spruches/search/findByTextContainingIgnoreCase?suche=das
+###
+POST http://localhost:8080/rest/tags/
+
+{
+    "name": "tagtest1"
+}
+###
+POST http://localhost:8080/rest/tags/
+
+{
+    "name": "tagtest2"
+}
+###
+POST http://localhost:8080/rest/tags/
+
+{
+    "name": "tagtest3"
+}

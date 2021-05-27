@@ -6,12 +6,7 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Version;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity
@@ -23,9 +18,6 @@ public class Kommentar {
 
     @Version
     private long version;
-
-   // @ManyToOne
-   // private Foto aktFoto;
 
     private String autor;
     private LocalDateTime zeitpunkt;
