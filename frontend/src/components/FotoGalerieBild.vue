@@ -6,7 +6,7 @@
         {{dateiname}}
       </p>
       <!-- Lösch-Button -->
-      <button class="button card-header-icon has-background-grey-light">
+      <button class="button card-header-icon has-background-grey-light" @click="delclicked()">
         <i class="fa fa-times" />
       </button>
     </div>
@@ -40,13 +40,17 @@ export default defineComponent({
   },
   setup(props, context) {
 
-   
+    function delclicked():void{
+      context.emit("entferne-foto", props.foto?.id);
+    }
+
     
     return {
       url: require("@/assets/thumbnails/" + props.foto?.dateiname),
       dateiname:props.foto?.dateiname,
       zeitstempel: props.foto?.zeitstempel,
-      ort:props.foto?.ort
+      ort:props.foto?.ort, 
+      delclicked
 
     };
   }
