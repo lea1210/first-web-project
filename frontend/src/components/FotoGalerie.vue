@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <!-- Button zum Hinzufügen des nächsten Bildes -->
-    <button class="button">
-      <i class="fas fa-camera" />
+    <button class="button" v-on:click="geklickt()">
+      <i class="fas fa-camera"/>
     </button>
     <!-- Eingabefeld für inkrementelle Suche -->
     <section class="section">
@@ -10,21 +10,40 @@
     </section>
     <section class="section">
       <div class="columns is-multiline">
-        <!-- Hier alle Bilder mit Hilfe der FotoGalerieBild-Komponente anzeigen -->
-        <!-- flexibel natürlich - nicht die fünf Beispielbilder hardcoden! -->
+        <FotoGalerieBild v-for="i in fotos" v-bind:key="i" :foto="i"/>
       </div>
     </section>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, Ref } from "vue";
+import { computed, defineComponent, reactive, ref, Ref } from "vue";
 import FotoGalerieBild from "./FotoGalerieBild.vue";
 import { Foto } from "@/services/Foto";
 import { fotoliste } from "@/services/FotoListe";
 
 export default defineComponent({
   name: "FotoGalerie",
+  components :{FotoGalerieBild},
+
+  setup(){
+    const fotos: Ref<Foto[]> = ref([]);
+    let max = fotoliste.length;
+    let zaehler = 0;
+
+    function geklickt(){
+      if(max<1){
+           alert('Keine Fotos mehr')
+      }else{
+        fotos.value.push(fotoliste[zaehler]);
+        zaehler++;
+        max--;
+      }
+    }
+
+    return {fotos, geklickt};
+
+  }
 
   
 });

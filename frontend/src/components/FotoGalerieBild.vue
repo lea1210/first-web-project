@@ -3,6 +3,7 @@
     <div class="card-header">
       <p class="card-header-title is-centered">
         <!-- Dateinamen ausgeben -->
+        {{dateiname}}
       </p>
       <!-- Lösch-Button -->
       <button class="button card-header-icon has-background-grey-light">
@@ -18,9 +19,9 @@
         <foto-star-rating :maxsterne="5" />
       </div>
       <!-- Ort -->
-      <div class="content">Irgendwo</div>
+      <div class="content">{{ort}}</div>
       <!-- Zeitstempel -->
-      <div class="has-text-grey">Irgendwann</div>
+      <div class="has-text-grey">{{zeitstempel}}</div>
     </div>
   </div>
 </template>
@@ -34,11 +35,19 @@ import { Foto } from "@/services/Foto";
 export default defineComponent({
   components: { FotoStarRating },
   name: "FotoGalerieBild",
+  props: {
+        foto: {type: Object as PropType<Foto>}
+  },
   setup(props, context) {
 
+   
     
     return {
-      url: require("@/assets/thumbnails/DerTupel.png")
+      url: require("@/assets/thumbnails/" + props.foto?.dateiname),
+      dateiname:props.foto?.dateiname,
+      zeitstempel: props.foto?.zeitstempel,
+      ort:props.foto?.ort
+
     };
   }
 });
