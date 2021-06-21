@@ -1,5 +1,10 @@
 <template>
   <div class="container">
+    <div v-if="fotostate.fotostate.errormessage != ''">
+      <div class="notification is-danger">
+        <div>{{fotostate.fotostate.errormessage}}</div>
+      </div>
+    </div>
     <!-- Button zum Hinzufügen des nächsten Bildes -->
     <button class="button" v-on:click="geklickt()">
       <i class="fas fa-camera"/>
@@ -13,6 +18,9 @@
         <FotoGalerieBild v-for="i in listitems" v-bind:key="i" :foto="i" @entferne-foto="entferneFoto($event)"/>
       </div>
     </section>
+    <div>
+      Insgesamt {{fotostate.fotostate.fotos.length}} Bilder
+    </div>
   </div>
 </template>
 
@@ -21,12 +29,14 @@ import { computed, defineComponent, reactive, ref, Ref } from "vue";
 import FotoGalerieBild from "./FotoGalerieBild.vue";
 import { Foto } from "@/services/Foto";
 import { fotoliste } from "@/services/FotoListe";
+import { useFotoStore } from'@/services/FotoStore';
 
 export default defineComponent({
   name: "FotoGalerie",
   components :{FotoGalerieBild},
 
   setup(){
+    const fotostate = useFotoStore();
     const fotos: Ref<Foto[]> = ref([]);
     const suchwort = ref("");
     let max = fotoliste.length;
@@ -55,7 +65,7 @@ export default defineComponent({
       fotos.value = fotos.value.filter(ele => ele.id !== id);
     }
 
-    return {listitems, geklickt, entferneFoto, suchwort};
+    return {listitems, geklickt, entferneFoto, suchwort, fotostate};
 
   }
 
