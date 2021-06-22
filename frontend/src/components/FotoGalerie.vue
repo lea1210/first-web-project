@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <div v-if="fotostate.fotostate.errormessage != ''">
+    <div v-if="fotostate.errormessage != ''">
       <div class="notification is-danger">
-        <div>{{fotostate.fotostate.errormessage}}</div>
+        <div>{{fotostate.errormessage}}</div>
       </div>
     </div>
     <!-- Button zum Hinzufügen des nächsten Bildes -->
@@ -19,13 +19,13 @@
       </div>
     </section>
     <div>
-      Insgesamt {{fotostate.fotostate.fotos.length}} Bilder
+      Insgesamt {{fotostate.fotos.length}} Bilder
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, Ref } from "vue";
+import { computed, defineComponent, reactive, ref, Ref, onMounted } from "vue";
 import FotoGalerieBild from "./FotoGalerieBild.vue";
 import { Foto } from "@/services/Foto";
 import { fotoliste } from "@/services/FotoListe";
@@ -36,10 +36,10 @@ export default defineComponent({
   components :{FotoGalerieBild},
 
   setup(){
-    const fotostate = useFotoStore();
+    const {fotostate, updateFotos, deleteFoto} = useFotoStore();
     const fotos: Ref<Foto[]> = ref([]);
     const suchwort = ref("");
-    let max = fotoliste.length;
+    let max = fotostate.fotos.length;
     let zaehler = 0;
 
     const listitems = computed(() => {
@@ -55,15 +55,22 @@ export default defineComponent({
       if(max<1){
            alert('Keine Fotos mehr')
       }else{
-          fotos.value.push(fotoliste[zaehler]);
+          fotos.value.push(fotostate.fotos[zaehler]);
         zaehler++;
         max--;
       }
     }
+    
 
     function entferneFoto(id:number): void{
-      fotos.value = fotos.value.filter(ele => ele.id !== id);
+      //fotos.value = fotos.value.filter(ele => ele.id !== id);
+      deleteFoto(id)
     }
+
+    onMounted(async () =>{
+        await updateFotos()
+    });
+
 
     return {listitems, geklickt, entferneFoto, suchwort, fotostate};
 
