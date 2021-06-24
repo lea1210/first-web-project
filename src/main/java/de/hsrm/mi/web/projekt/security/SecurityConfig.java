@@ -1,5 +1,6 @@
 package de.hsrm.mi.web.projekt.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+    @Autowired FotoDetailsService fDetailsService;
 
     @Bean PasswordEncoder passwordEncoder(){
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -31,6 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .withUser("joghurta")
             .password(pwenc.encode("geheim123"))
             .roles("PHOTOGRAPH");
+
+        authmanagerbuilder
+            .userDetailsService(fDetailsService)
+            .passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -42,13 +48,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .antMatchers(HttpMethod.GET, "/foto/*").permitAll()
             .antMatchers(HttpMethod.POST, "/foto").hasRole("PHOTOGRAPH")
             .antMatchers(HttpMethod.GET, "/foto/*/del").hasRole("PHOTOGRAPH")
+            .antMatchers("/h2-console").permitAll()
+            .antMatchers("/h2-console/*").permitAll()
         .and()
             .formLogin()
             .defaultSuccessUrl("/foto")
             .permitAll();
 
         //erlaubt DELETE operation für rest api
-        http.csrf().disable();
+        http
+            .csrf()
+            .ignoringAntMatchers("/api")
+            .ignoringAntMatchers("/h2-console")
+            .ignoringAntMatchers("/h2-console/*");
+
+        http.headers().frameOptions().disable();
   
     }
 
