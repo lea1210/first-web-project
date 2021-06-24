@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,11 +62,15 @@ public class FotoController {
     }
 
     @GetMapping("/foto")
-    public String foto_get(Model m, @ModelAttribute("fotos") ArrayList<Foto> fotos){
+    public String foto_get(Model m, @ModelAttribute("fotos") ArrayList<Foto> fotos, Principal principal){
 
         fotos.addAll(fbservice.alleFotosNachZeitstempelSortiert());
         logger.info("Fotos wurden der Liste hizugefuegt.");
         m.addAttribute("fotos", fotos);
+
+        //Principal nutzen für username
+        String username = principal.getName();
+        m.addAttribute("principalName", username);
 
         return "foto/liste";
        
@@ -98,7 +103,7 @@ public class FotoController {
         
     }
     @GetMapping("/foto/{id}/kommentar")
-    public String foto_getKommentar(Model m,  @PathVariable("id") long id, @ModelAttribute("fotos") ArrayList<Foto> fotos,  @ModelAttribute("selectedFoto") Foto selectedFoto, @ModelAttribute("kommentare") ArrayList<Kommentar> kommentare){
+    public String foto_getKommentar(Model m,  @PathVariable("id") long id, @ModelAttribute("fotos") ArrayList<Foto> fotos,  @ModelAttribute("selectedFoto") Foto selectedFoto, @ModelAttribute("kommentare") ArrayList<Kommentar> kommentare, Principal principal){
 
         Optional<Foto> selectedFotoOpt = fbservice.fotoAbfragenNachId(id);
         if(selectedFotoOpt.isPresent()){
@@ -120,7 +125,9 @@ public class FotoController {
                     m.addAttribute("loggedinusername", loggedIn);
                 }
             }else{
-                logger.info("loggedinjusername ist null");
+                logger.info("loggedinusername ist null");
+                m.addAttribute("loggedinusername", principal.getName());
+
             }
             return "foto/kommentare";
         }
@@ -129,7 +136,7 @@ public class FotoController {
     }
 
     @PostMapping("/foto/{id}/kommentar")
-    public String foto_postKommentar(Model m,  @PathVariable("id") long id, @RequestParam String kommentar){
+    public String foto_postKommentar(Model m,  @PathVariable("id") long id, @RequestParam String kommentar, Principal principal){
 
         Object autorObj = m.getAttribute("loggedinusername");
 
@@ -144,6 +151,9 @@ public class FotoController {
                     fbservice.fotoKommentieren(id, autor, kommentar);
                     logger.info("Foto erfolgreich kommentiert");
                     logger.info("so viele kommentare hat das foto jetzt: "+ fbservice.alleKommentareFuerFoto(id).size());
+                }else{
+                    m.addAttribute("loggedinusername", principal.getName());
+                    fbservice.fotoKommentieren(id, principal.getName(), kommentar);
                 }
             }
         }

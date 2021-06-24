@@ -5,6 +5,10 @@
         <link rel="stylesheet" th:href="@{/css/liste.css}">
     </head>
     <body>
+        <span th:text="${principalName}"></span>
+        <form th:action="@{/logout}" method="POST">
+            <button name="logoutButton">Logout</button>
+        </form>
         <h1>Foto hochladen</h1>
         <form th:action="@{/foto}" th:method="POST" enctype="multipart/form-data">
             <input type="file" name="datei"><br>

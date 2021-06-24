@@ -11,9 +11,12 @@
         <span><a target="_blank" th:href="|https://www.openstreetmap.org/#map=17/${selectedFoto.geobreite}/${selectedFoto.geolaenge}|" th:text="${selectedFoto.ort}">Schlumpfhausen</a></span><br>
         <h2>Kommentare</h2>
         <span th:each="kommentar:${kommentare}">
-            <span th:text="${kommentar.autor}"></span>Autor<br>
-            <span th:text="${kommentar.text}"></span>Text<br>
-            <span th:text="${kommentar.zeitpunkt}"></span>Zeitpunkt<br>
+            <span>Autor</span>
+            <h3 th:text="${kommentar.autor}"></h3>
+            <span>Text</span>
+            <h3 th:text="${kommentar.text}"></h3>
+            <span>Zeitpunkt</span>
+            <h3 th:text="${kommentar.zeitpunkt}"></h3><br>
         </span>
         <div th:if="${loggedinusername}!=null or !${#strings.isEmpty(loggedinusername)}">
             <h2>Geben Sie hier Ihren neuen Kommentar ein!</h2>
