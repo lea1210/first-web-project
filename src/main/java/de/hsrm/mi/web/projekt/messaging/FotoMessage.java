@@ -1,6 +1,10 @@
+package de.hsrm.mi.web.projekt.messaging;
+
+import java.util.Objects;
+
 public class FotoMessage {
-    public static finalString FOTO_GESPEICHERT = "fotoGespeichert";
-    public static finalString FOTO_GELOESCHT = "fotoGeloescht";
+    public static final String FOTO_GESPEICHERT = "fotoGespeichert";
+    public static final String FOTO_GELOESCHT = "fotoGeloescht";
     private String operation;
     private long id;
 

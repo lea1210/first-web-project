@@ -37,17 +37,23 @@ export default defineComponent({
 
   setup(){
     const {fotostate, updateFotos, deleteFoto} = useFotoStore();
-    const fotos: Ref<Foto[]> = ref([]);
+    //const fotos: Ref<Foto[]> = ref([]);
     const suchwort = ref("");
     let max = fotostate.fotos.length;
     let zaehler = 0;
 
+    console.log("ich hab" + fotostate.fotos.length+ "fotos")
+
     const listitems = computed(() => {
       const n: number = suchwort.value.length;
       if(suchwort.value.length < 3) {
-        return fotos.value;
+        //return fotos.value;
+        console.log("Kein oder zu kurzes Suchwort")
+        return fotostate.fotos;
       }else{
-        return fotos.value.filter(e =>e.ort.toLowerCase().includes(suchwort.value.toLowerCase()));
+        console.log("Filter angewendet")
+        //return fotos.value.filter(e =>e.ort.toLowerCase().includes(suchwort.value.toLowerCase()));
+        return fotostate.fotos.filter(e =>e.ort.toLowerCase().includes(suchwort.value.toLowerCase()));
       }
     });
 
@@ -55,7 +61,7 @@ export default defineComponent({
       if(max<1){
            alert('Keine Fotos mehr')
       }else{
-          fotos.value.push(fotostate.fotos[zaehler]);
+          //fotos.value.push(fotostate.fotos[zaehler]);
         zaehler++;
         max--;
       }
@@ -64,6 +70,7 @@ export default defineComponent({
 
     function entferneFoto(id:number): void{
       //fotos.value = fotos.value.filter(ele => ele.id !== id);
+      console.log("Lösche Foto")
       deleteFoto(id)
     }
 
@@ -72,7 +79,7 @@ export default defineComponent({
     });
 
 
-    return {listitems, geklickt, entferneFoto, suchwort, fotostate};
+    return {listitems, geklickt, entferneFoto, suchwort, fotostate, fotos:fotostate.fotos};
 
   }
 

@@ -6,10 +6,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.hsrm.mi.web.projekt.messaging.FotoMessage;
 import de.hsrm.mi.web.projekt.utils.FotoBearbeitungService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +39,13 @@ public class FotoServiceImpl implements FotoService{
 
         Foto managedFoto = fotorep.save(foto);
 
+        //sendet FotoMessage mit Operationswert FOTO_GESPEICHERT
+        FotoMessage fMessage = new FotoMessage();
+        fMessage.setOperation(FotoMessage.FOTO_GESPEICHERT); 
+        broker.convertAndSend("/topic/foto", fMessage);
+        logger.info("---------------------------------------------------------------------------------------------------");
+        logger.info("Operation Foto_Gespeichrt an Topic Foto gesendet");
+
         return managedFoto;
     }
 
@@ -55,6 +64,14 @@ public class FotoServiceImpl implements FotoService{
     @Override
     public void loescheFoto(Long id) {
         fotorep.deleteById(id);
+
+        //sendet FotoMessage mit Operationswert FOTO_GELOESCHT 
+        FotoMessage fMessage = new FotoMessage();
+        fMessage.setOperation(FotoMessage.FOTO_GELOESCHT); 
+        broker.convertAndSend("/topic/foto", fMessage);
+        logger.info("---------------------------------------------------------------------------------------------------");
+        logger.info("Operation Foto_Geloescht an Topic Foto gesendet");
+
     }
 
     @Override
@@ -105,5 +122,6 @@ public class FotoServiceImpl implements FotoService{
             
         }
     }
+
     
 }

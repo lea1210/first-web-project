@@ -46,7 +46,8 @@ export default defineComponent({
 
     
     return {
-      url: require("@/assets/thumbnails/" + props.foto?.dateiname),
+      //url: require("@/assets/thumbnails/" + props.foto?.dateiname),
+      url: "foto/" + props.foto?.id,
       dateiname:props.foto?.dateiname,
       zeitstempel: props.foto?.zeitstempel,
       ort:props.foto?.ort, 
