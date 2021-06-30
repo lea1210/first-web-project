@@ -42,7 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-            .antMatchers("/*").authenticated()
             .antMatchers("/api").permitAll()
             .antMatchers("/messagebroker").permitAll()
             .antMatchers(HttpMethod.GET, "/foto/*").permitAll()
@@ -50,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .antMatchers(HttpMethod.GET, "/foto/*/del").hasRole("PHOTOGRAPH")
             .antMatchers("/h2-console").permitAll()
             .antMatchers("/h2-console/*").permitAll()
+            .antMatchers("/*").authenticated()
         .and()
             .formLogin()
             .defaultSuccessUrl("/foto")

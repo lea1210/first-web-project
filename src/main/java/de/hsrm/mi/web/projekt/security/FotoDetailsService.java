@@ -8,11 +8,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class FotoDetailsService implements UserDetailsService{
     @Autowired private FotoUserRepository fotoUserRepository;
     @Autowired PasswordEncoder pwenc;
+    Logger logger = LoggerFactory.getLogger(FotoDetailsService.class);
 
 
     @Override
@@ -31,7 +34,7 @@ public class FotoDetailsService implements UserDetailsService{
         return org.springframework.security.core.userdetails.User
             .withUsername(username)
             .password(pwenc.encode(realUser.getPassword()))
-            .roles() 
+            .roles(realUser.getRole()) 
             .build();
     }
     
