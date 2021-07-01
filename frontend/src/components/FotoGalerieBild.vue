@@ -22,6 +22,7 @@
       <div class="content">{{ort}}</div>
       <!-- Zeitstempel -->
       <div class="has-text-grey">{{zeitstempel}}</div>
+      <router-link :to="{path: '/detail/' + id}">Details</router-link>
     </div>
   </div>
 </template>
@@ -47,10 +48,11 @@ export default defineComponent({
     
     return {
       //url: require("@/assets/thumbnails/" + props.foto?.dateiname),
-      url: "foto/" + props.foto?.id,
+      url: "api/foto/" + props.foto?.id,
       dateiname:props.foto?.dateiname,
       zeitstempel: props.foto?.zeitstempel,
       ort:props.foto?.ort, 
+      id: props.foto?.id,
       delclicked
 
     };

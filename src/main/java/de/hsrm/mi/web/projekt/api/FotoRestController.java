@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.Optional;
 
 import de.hsrm.mi.web.projekt.foto.Foto;
 import de.hsrm.mi.web.projekt.foto.FotoService;
@@ -23,6 +25,22 @@ public class FotoRestController {
     @GetMapping("/foto")
     public List<Foto> fotoRest_getFoto(Model m){
         return fservice.alleFotosNachZeitstempelSortiert();
+    }
+
+    @GetMapping("/foto/{id}")
+    public ResponseEntity<byte[]> foto_getId(Model m, @PathVariable("id") long id){
+
+        Optional<Foto> optFoto = fservice.fotoAbfragenNachId(id);
+
+        if (optFoto.isPresent()){
+            Foto foto = optFoto.get();
+
+            return ResponseEntity.ok()
+                .header("Content-Type", foto.getMimetype())
+                .body(foto.getFotodaten());
+        }else{
+            return null;
+        }
     }
 
     @DeleteMapping("/foto/{id}")

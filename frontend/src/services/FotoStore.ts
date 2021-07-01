@@ -82,10 +82,3 @@ stompclient.onDisconnect = () => {
 //Verbindung zum Broker aufbauen
 stompclient.activate();
 
-//try{
-   // stompclient.publish({destination: DEST, headers : {}, body: JSON.stringify()
-
-  //  });
-//}catch (fehler){
-
-//}
