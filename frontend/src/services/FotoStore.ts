@@ -2,6 +2,7 @@ import { Foto } from "./Foto";
 import {reactive, readonly} from 'vue';
 import { Client, Message } from "@stomp/stompjs";
 import { FotoMessage } from "./FotoMessage";
+import { useLoginStore } from '@/services/LoginStore';
 
 const wsurl = "ws://localhost:9090/messagebroker"
 const DEST = "/topic/foto"
@@ -21,9 +22,15 @@ export function useFotoStore(){
 }
 
 function updateFotos(){
-    fetch('api/foto')
+    const {loginstate, doLogin,doLogout} = useLoginStore();
+    console.log("jwtoken: " + loginstate.jwttoken);
+
+    fetch('api/foto',{
+        headers: {'Authorization': 'Bearer'+loginstate.jwttoken}
+    })
     .then((response) =>{
         if(!response.ok){
+            console.log("Response nicht okay");
             fotostate.errormessage = response.statusText
         }else{
             fotostate.errormessage = ''
@@ -31,6 +38,7 @@ function updateFotos(){
         }
     })
     .then((jsondata)=>{
+        console.log("Fotos erhalten")
         fotostate.fotos = jsondata
     })
     .catch(reason => {
@@ -39,13 +47,18 @@ function updateFotos(){
 }
 
 function deleteFoto(id:number){
+    const {loginstate, doLogin,doLogout} = useLoginStore();
+
     fetch('api/foto/'+id,{
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {'Authorization': 'Bearer' +loginstate.jwttoken}
     })
     .then((response) =>{
         if(!response.ok){
+            console.log("Response nicht okay");
             fotostate.errormessage = response.statusText
         }else{
+            console.log("Foto geloescht")
             fotostate.errormessage = ''
         }
     })

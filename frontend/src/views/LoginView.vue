@@ -17,6 +17,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
 import { useLoginStore } from '@/services/LoginStore';
+import { useRouter } from "vue-router";
 
 
 export default defineComponent({
@@ -32,13 +33,26 @@ export default defineComponent({
     const {loginstate, doLogin,doLogout} = useLoginStore();
     const username = ref("");
     const password = ref("");
+    const router = useRouter();
     
       //beim Laden der View ausloggen
     doLogout();
 
 
     function loginButton(){
-      doLogin(username.value, password.value);
+      
+      doLogin(username.value, password.value).then(value => {
+        if(value == true){
+           console.log("Value ist true");
+           router.push("/");
+        }else{
+          console.log("Value ist false");
+        }
+      })
+        
+      //if(loginstate.isLoggedIn == true){
+        //router.push("/");
+      //}
     }
 
     return{

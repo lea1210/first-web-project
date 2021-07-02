@@ -3,6 +3,7 @@
     <div class="hero is-primary">
       <div class="hero-body">
         <h1 class="title">MI Foto Community</h1>
+        <div>{{loginstate.username}}</div>
       </div>
     </div>
 
@@ -31,9 +32,17 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { useLoginStore } from '@/services/LoginStore';
 
 export default defineComponent({
   name: "App",
-  components: {}
+  components: {},
+  setup(){
+     const {loginstate} = useLoginStore();
+
+     return{
+       loginstate
+     }
+  }
 });
 </script>
