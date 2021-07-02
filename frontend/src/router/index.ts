@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import FotoGalerieView from '@/views/FotoGalerieView.vue'
 import AboutView from '@/views/AboutView.vue'
 import FotoDetailView from '@/views/FotoDetailView.vue'
+import LoginView from '@/views/LoginView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -19,6 +20,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'FotoDetailView',
     component: FotoDetailView,
     props: true
+  },
+  {
+    path: '/login',
+    name: 'Login/Logout',
+    component: LoginView
   }
 ]
 

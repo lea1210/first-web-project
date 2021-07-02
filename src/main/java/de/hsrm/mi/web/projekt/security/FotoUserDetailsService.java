@@ -12,10 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-public class FotoDetailsService implements UserDetailsService{
+public class FotoUserDetailsService implements UserDetailsService{
     @Autowired private FotoUserRepository fotoUserRepository;
     @Autowired PasswordEncoder pwenc;
-    Logger logger = LoggerFactory.getLogger(FotoDetailsService.class);
+    Logger logger = LoggerFactory.getLogger(FotoUserDetailsService.class);
 
 
     @Override
