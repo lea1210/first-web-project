@@ -9,7 +9,7 @@
     </div>
     <div>
       <!-- Bild anzeigen -->
-      <img :src="foto.url" />
+      <img :src="url" />
       <!-- Ort -->
       <div class="content">{{foto.ort}}</div>
     </div>
@@ -35,11 +35,12 @@ export default defineComponent({
     if(props.fotoid != undefined){
         const idNumber = parseInt(props.fotoid);
         console.log("id: " + idNumber);
-        foto = fotostate.fotos.filter(e =>e.id == idNumber);
+        foto = fotostate.fotos.find(e =>e.id == idNumber);
         console.log("Foto gefunden :" );
     }
     return{
-        foto
+        foto,
+        url: "/api/foto/" + foto?.id
     }
 
       

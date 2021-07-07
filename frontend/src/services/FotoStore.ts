@@ -25,8 +25,8 @@ function updateFotos(){
     const {loginstate, doLogin,doLogout} = useLoginStore();
     console.log("jwtoken: " + loginstate.jwttoken);
 
-    fetch('api/foto',{
-        headers: {'Authorization': 'Bearer'+loginstate.jwttoken}
+    fetch('/api/foto',{
+        headers: {'Authorization': 'Bearer '+loginstate.jwttoken}
     })
     .then((response) =>{
         if(!response.ok){
@@ -49,9 +49,9 @@ function updateFotos(){
 function deleteFoto(id:number){
     const {loginstate, doLogin,doLogout} = useLoginStore();
 
-    fetch('api/foto/'+id,{
+    fetch('/api/foto/'+id,{
         method: 'DELETE',
-        headers: {'Authorization': 'Bearer' +loginstate.jwttoken}
+        headers: {'Authorization': 'Bearer ' +loginstate.jwttoken}
     })
     .then((response) =>{
         if(!response.ok){
